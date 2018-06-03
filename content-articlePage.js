@@ -175,6 +175,149 @@ if (/https:\/\/bihu.com\/article\//.test(window.location.href)) {
             }
 
         }
-    })
+    });
+
+    //$(document).ready(function(){
+    var btnLoaded = false;
+    var tryCount = 0;
+    var clks = setInterval(function(){
+        btn=$("button.LoaderButton.load");
+        if(btn.length < 1)
+        {
+            tryCount++;
+        }else{
+            btnLoaded = true;
+        }
+
+        if((btnLoaded === false) && (tryCount < 6))
+            return;
+            
+        if(!btn.is(':visible'))
+        {
+            clearInterval(clks);
+
+            var comments = $("div.row.comment-info");
+
+            var auth = $.parseJSON(localStorage.getItem("ANDUI_BIHU_LOGININFO"));
+            var key = auth.userId;
+            var bwlist = null;
+            if(localStorage.getItem(key + "_bwlist") != null)
+            {
+                bwlist = $.parseJSON(localStorage.getItem(key + "_bwlist"));
+            }
+            //allitems += comments.length;
+            comments.each(function() {
+                //var innerText = $(this).find("p.first-comment-content").text().length;
+                var userName = this.children[0].children[1].children[0].text + "";
+
+                //如果在黑名单里面，直接删除
+                if(bwlist !== null)
+                {
+                    for(var item in bwlist["blist"])
+                    { 
+                        if(bwlist["blist"][item] == userName)//注意：此处的item不是数组项，而是数组项的索引
+                        {
+                            $(this).remove();
+                            return;
+                        }
+                    }
+
+                    for(var item in bwlist["wlist"])
+                    { 
+                        if(bwlist["wlist"][item] == userName)//注意：此处的item不是数组项，而是数组项的索引
+                        {
+                            $(this.children[0].children[1].children[1]).after('<span style="color: #bcc7d7;font-size: 12px;margin-left: 2px;margin-right: 2px"><input style="margin-right:2px" type="checkbox" class=blist>黑名单</span><span style="color: #bcc7d7;font-size: 12px;margin-left: 2px;margin-right: 2px"><input checked=true style="margin-right:2px" type="checkbox" class=wlist>白名单</span>');
+                            return;
+                        }
+                    }
+                }                    
+                
+                if($(this).find("p.first-comment-content").text().length < 5)
+                    $(this).remove();
+                else{
+                    $(this.children[0].children[1].children[1]).after('<span style="color: #bcc7d7;font-size: 12px;margin-left: 2px;margin-right: 2px"><input style="margin-right:2px" type="checkbox" class=blist>黑名单</span><span style="color: #bcc7d7;font-size: 12px;margin-left: 2px;margin-right: 2px"><input style="margin-right:2px" type="checkbox" class=wlist>白名单</span>');
+                }
+            });
+            $("input.blist").click(function(){  
+                var auth = $.parseJSON(localStorage.getItem("ANDUI_BIHU_LOGININFO"));
+                var key = auth.userId;
+                var bwlist = null;
+                if(localStorage.getItem(key + "_bwlist") == null)
+                {
+                    bwlist = $.parseJSON("{\"blist\":[], \"wlist\":[]}");
+                }else
+                {
+                    bwlist = $.parseJSON(localStorage.getItem(key + "_bwlist"));
+                }
+                if(this.checked === true)
+                {
+                    var userName = this.parentNode.parentNode.childNodes[0].text;
+                    for(var item in bwlist["blist"])
+                    { 
+                        if(bwlist["blist"][item] == userName)//注意：此处的item不是数组项，而是数组项的索引
+                        {
+                            alert("用户\"" + userName + "\"已经在黑名单中！");
+                            return;
+                        }
+                    }
+                    bwlist["blist"].push(userName);
+                    localStorage.setItem(key + "_bwlist", JSON.stringify(bwlist));
+                    alert("已将用户\"" + userName + "\"增加到黑名单，下次将不会显示其评论！");
+                }else{
+                    var userName = this.parentNode.parentNode.childNodes[0].text;
+                    for(var item in bwlist["blist"])
+                    { 
+                        if(bwlist["blist"][item] == userName)//注意：此处的item不是数组项，而是数组项的索引
+                        {
+                            delete bwlist["blist"][item];
+                        }
+                    }
+                    localStorage.setItem(key + "_bwlist", JSON.stringify(bwlist));
+                    alert("已将用户\"" + userName + "\"从黑名单从删除！");
+                }
+            }); 
+            $("input.wlist").click(function(){  
+                var auth = $.parseJSON(localStorage.getItem("ANDUI_BIHU_LOGININFO"));
+                var key = auth.userId;
+                var bwlist = null;
+                if(localStorage.getItem(key + "_bwlist") == null)
+                {
+                    bwlist = $.parseJSON("{\"blist\":[], \"wlist\":[]}");
+                }else
+                {
+                    bwlist = $.parseJSON(localStorage.getItem(key + "_bwlist"));
+                }
+                if(this.checked === true)
+                {
+                    var userName = this.parentNode.parentNode.childNodes[0].text;
+                    for(var item in bwlist["wlist"])
+                    { 
+                        if(bwlist["wlist"][item] == userName)//注意：此处的item不是数组项，而是数组项的索引
+                        {
+                            alert("用户\"" + userName + "\"已经在白名单中！");
+                            return;
+                        }
+                    }
+                    bwlist["wlist"].push(userName);
+                    localStorage.setItem(key + "_bwlist", JSON.stringify(bwlist));
+                    alert("已将用户\"" + userName + "\"增加到白名单！");
+                }else{
+                    var userName = this.parentNode.parentNode.childNodes[0].text;
+                    for(var item in bwlist["wlist"])
+                    { 
+                        if(bwlist["wlist"][item] == userName)//注意：此处的item不是数组项，而是数组项的索引
+                        {
+                            delete bwlist["wlist"][item];
+                        }
+                    }
+                    localStorage.setItem(key + "_bwlist", JSON.stringify(bwlist));
+                    alert("已将用户\"" + userName + "\"从白名单从删除！");
+                }
+            });  
+        }else{
+            btn.click();
+        }
+    },1000);        
+    //});
 
 }
