@@ -1,0 +1,91 @@
+.areaDiv {
+    border: 1px solid #007bff;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.myInput {
+    width: 45px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 13px;
+}
+
+#startTimer {
+    margin-left: 20px;
+    padding: 2px;
+    background: #007bff;
+    color: white;
+    border-radius: 2px;
+    border: 1px solid #007bff;
+    font-size: 12px;
+    display: block !important;
+}
+
+.taskBtn {
+    margin-left: 20px;
+    padding: 2px;
+    background: orange;
+    color: white;
+    border-radius: 2px;
+    border: 1px solid orange;
+    font-size: 12px;
+    display: block !important;
+}
+
+#cancelTimer {
+    margin-left: 20px;
+    padding: 2px;
+    background: #ff8247;
+    color: white;
+    border-radius: 2px;
+    border: 1px solid #ff8247;
+    font-size: 12px;
+}
+
+.note {
+    font-size: 12px;
+    margin-top: 2px;
+    color: #c1c1c1;
+}
+
+.note.alertNote {
+    color: red;
+}
+
+#log {
+    color: #34a853;
+    margin-left: 10px;
+}
+
+.selfNote {
+    font-size: 12px;
+    color: #c1c1c1;
+    text-align: right;
+}
+
+.draftLog {
+    color: #c1c1c1;
+}
+
+.draftBar {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 3px;
+}
+
+#addDraftBtn {
+    margin-left: 20px;
+    display: block !important;
+}
+
+.timeBar {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.timeBar * {
+    margin: 2px;
+}

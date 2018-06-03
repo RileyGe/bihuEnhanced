@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_629450_k29soav57qwu3di.css" type="text/css" />
+    <link rel="stylesheet" href="popup.css" type="text/css" />
+    <script src="lib/jquery.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <span class="title">币乎增强<span id="versionAlert"></span></span>
+        <span class="tabActive tab" id='favArtListBtn' title="收藏文章列表">★文章</span>
+        <span>|</span>
+        <span class="tab" title="收藏用户列表" id='favUserListBtn'>★用户</span>
+        <span>|</span>
+        <span class="tab" title="草稿箱" id='draftsListBtn'>草稿箱</span>
+        <span>|</span>
+        <span class="tab" title="定时发文计划" id='tasksListBtn'>发文计划</span>
+        <span>|</span>
+        <span class="tab" title="定时发文计划" id='bigVListBtn'>大V时间</span>
+    </div>
+    <div class="content" id="content-article">
+        <div class="itemArea" id="itemArea-article">
+        </div>
+    </div>
+    <div class="content" id="content-user">
+        <div class="itemArea" id="itemArea-user">
+        </div>
+    </div>
+    <div class="content" id="content-draft">
+        <div class="itemArea" id="itemArea-draft">
+        </div>
+    </div>
+    <div class="content" id="content-task">
+        <div class="itemArea" id="itemArea-task">
+        </div>
+    </div>
+    <div class="content" id="content-bigV">
+        <div style="margin-bottom: 10px;">
+            <span id="showFormBtn" style="cursor: pointer;text-decoration: underline;">本地录入</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="./timeBase.html" target="__blank">从在线数据库获取</a>
+        </div>
+        <div id="theForm">
+            <label>名字</label>
+            <input type="string" placeholder="点击输入" class="inputL1" id="bigVName" />
+            <label>币乎ID</label>
+            <input type="number" placeholder="9909" class="inputL1" size="10" id="bigVId" />
+            <label>时间</label>
+            <input type="number" placeholder="20" class="inputL2" id="bigVHour" />
+            <label>:</label>
+            <input type="number" placeholder="08" class="inputL2" id="bigVMinute" />
+            <label>发文日</label>
+            <select id="weekDayOption">
+                <option value="-1">每天</option>
+                <option value="1">周一</option>
+                <option value="2">周二</option>
+                <option value="3">周三</option>
+                <option value="4">周四</option>
+                <option value="5">周五</option>
+                <option value="6">周六</option>
+                <option value="7">周日</option>
+            </select>
+            <span>&nbsp;  </span>
+            <i title="添加大V" id="addBigVBtn" class="iconfont icon-plus"></i>
+            <span id='bigVLog' style='color: green'></span>
+            <span>&nbsp; &nbsp;&nbsp;&nbsp; </span>
+        </div>
+        <hr>
+        <div class="itemArea" id="itemArea-bigV">
+        </div>
+    </div>
+    <div class="noResult" id="noResult">
+        <span> 暂无收藏内容</span>
+    </div>
+    <hr>
+    <div class="footer"><span id="policyBtn">隐私权政策</span><a style='text-decoration:none' href='http://thisis.yorven.site/blog/index.php/2018/05/04/privacy-policy/'><i title="点击打开链接"  class="iconfont icon-link"></i></a><span style='flex:1'></span>&nbsp; &nbsp;<a href='options.html' style='text-decoration:none'>选项</a> &nbsp;&nbsp; <a style='text-decoration:none' href='https://bihu.com/article/330792'>教程</a> &nbsp;&nbsp;<span>币乎增强插件<span id="version"></span></span>
+    </div>
+    <div id="policy" style="display: none">
+        <p>
+            本插件不会将任何数据发送至除https://bihu.com之外的第三方服务器，仅协助用户使用现有功能将合适的内容发送至https://bihu.com官方服务器。
+        </p>
+        <p>可能涉及到的隐私操作：</p>
+        <p>1. 本插件会从https://bihu.com 网站的html5 storage数据中获取用户的用户Id</p>
+        <p>2. 本插件会操作https://bihu.com 网站的html5 storage，将要发表文章草稿信息(内容、版块、封面)存入其中，使得打开edit页面时可将用户草稿载入页面</p>
+        <p>3. 为实现草稿、收藏、搜索等功能，本插件会在用户知情的情况下更改https://bihu.com网站的页面</p>
+        <p>4. 因为整合了tinyMCE编辑器，插件会监控对于tinyMCE皮肤资源css、字体、翻译js等的请求，将其重定向到插件内地址</p>
+    </div>
+</body>
+<script src="popup.js"></script>
+
+</html>

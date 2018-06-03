@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>币乎增强数据库</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="lib/theme-chalk.css">
+    <!-- 引入组件库 -->
+    <script src="lib/elementUI.js"></script>
+    <link rel="stylesheet" href="timeBase.css" type="text/css" />
+    <link rel="shortcut icon" href="icon/icon128.png" />
+    <link rel="bookmark" href="icon/icon128.png" />
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <el-row>
+            <el-col :span="3">
+                <div>&nbsp;</div>
+            </el-col>
+            <el-col :span="18">
+                <el-container>
+                    <el-header>
+                        <h1> 币乎增强插件——定时发文数据库</h1>
+                    </el-header>
+                    <el-main v-loading="loadingMain">
+                        <div>
+                            <el-select style="width:100px" size="mini" v-model="queryItem" placeholder="请选择">
+                                <el-option v-for="item in queryItems" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                            <el-input size="mini" style="width:200px" placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input4Query" @keyup.enter.native="query">
+                            </el-input>
+                            <el-button icon="el-icon-search" round size="mini" @click="query"></el-button>
+                            <el-button size="mini" type="" style="float:right" round @click="newDialogVisible=true">新增</el-button>
+                        </div>
+                        <el-card>
+                            <el-table :data="timings.results" style="width: 100%" v-loading="loadingTable" :default-sort="{prop: 'clicked', order: 'descending'}"     highlight-current-row
+>
+                                <el-table-column width="80" >
+                                    <template slot-scope="scope">
+                                         <a target="__blank" :href="'https://bihu.com/people/'+scope.row.bihuId" style="margin-right:10px;font-size:12px;text-decoration:none;color:#409EFF">查看</a>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="bihuName" label="作者名" width="120">
+                                </el-table-column>
+                                <el-table-column prop="bihuId" label="币乎ID" width="120" sortable>
+                                </el-table-column>
+                                <el-table-column prop="publishTime" label="发文时间" width="120" sortable>
+                                </el-table-column>
+                                <el-table-column  label="发文日" width="120" sortable>
+                                    <template slot-scope="scope">
+                                        <template v-if="scope.row.publishWeekday">
+                                       <span v-if="scope.row.publishWeekday=='1'">周一</span> 
+                                       <span v-if="scope.row.publishWeekday=='2'">周二</span> 
+                                       <span v-if="scope.row.publishWeekday=='3'">周三</span> 
+                                       <span v-if="scope.row.publishWeekday=='4'">周四</span> 
+                                       <span v-if="scope.row.publishWeekday=='5'">周五</span> 
+                                       <span v-if="scope.row.publishWeekday=='6'">周六</span> 
+                                       <span v-if="scope.row.publishWeekday=='7'">周日</span> 
+                                       <span v-if="scope.row.publishWeekday=='-1'">每天</span> 
+                                       </template>
+                                       <span v-else>每天</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="clicked" label="关注人数" width="120"sortable>
+                                </el-table-column>
+                                <el-table-column fixed="right" label="读者操作" width="120" >
+                                                                        <template slot-scope="scope">
+                                   
+                                        <el-button v-if="!scope.row.fromServer" @click="addToLocal(scope.row,scope)" type="text" size="small">加入列表</el-button>
+                                        <el-button v-if="scope.row.fromServer" :disabled="true" @click="" type="text" size="small">已加入</el-button>
+
+                                    </template>
+                                </el-table-column>
+                                <el-table-column fixed="right" label="作者操作" >
+                                    <template slot-scope="scope">
+                                   
+                                        <el-button type="text" size="small" @click="beforeModifyTiming(scope.row)">修改</el-button>
+                                        <el-button type="text" size="small" @click="beforeDelTiming(scope.row)" style="color:red">删除</el-button>                                       
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                            <div style="margin:5px;float:right">
+                                <el-button icon="el-icon-arrow-left" size="mini" v-if="timings.previous" @click="getPre">上一页</el-button>
+                                <el-button icon="el-icon-arrow-right" size="mini" v-if="timings.next" @click="getNext">下一页</el-button>
+                            </div>
+                        </el-card>
+                    </el-main>
+                </el-container>
+            </el-col>
+            <el-col :span="3">
+                <div>&nbsp;</div>
+            </el-col>
+        </el-row>
+        <el-dialog title="新增记录" :visible.sync="newDialogVisible" width="400px">
+            <div class="inputTitle">币乎Id</div>
+            <div>
+                <el-input size="mini" placeholder="请输入币乎ID" v-model="newData.bihuId" type="number">
+                </el-input>
+            </div>
+            <div class="inputTitle"> 申明定时时间的文章Id</div>
+            <div>
+                <el-input size="mini" placeholder="请输入文章Id" v-model="newData.proveArticleId" type="number">
+                </el-input>
+            </div>
+
+             <div class="note">
+                注：需要用该币乎ID账户发布一篇文章，文章的开头部分需要包含以下文字：<span style="color:red"> 币乎增强定时/周一/10:00</span> 。将周一和10:00改成需要修改的时间即可。如果日更，则将周一改为每日，如: <span style="color:red">币乎增强定时/每日/10:00</span>。
+            </div>           
+ 
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="newDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addNew">确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog title="申请修改记录" :visible.sync="modifyDialogVisible" width="400px">
+            <div class="inputTitle">币乎Id</div>
+            <div>
+                <el-input size="mini" placeholder="请输入币乎ID" :disabled="true" v-model="toModifyTiming.bihuId" type="number">
+                </el-input>
+            </div>
+            <div class="inputTitle"> 重新申明定时时间的文章Id</div>
+            <div>
+                <el-input size="mini" placeholder="请输入文章Id" v-model="toModifyTiming.proveArticleId" type="number">
+                </el-input>
+            </div>
+            <div class="note">
+                注：需要用该币乎ID账户发布一篇文章，文章的开头部分需要包含以下文字：<span style="color:red"> 币乎增强定时/周一/10:00</span> 。将周一和10:00改成需要修改的时间即可。如果日更，则将周一改为每日，如: <span style="color:red">币乎增强定时/每日/10:00</span>。
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="modifyDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="modifyTiming">确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog title="申请删除记录" :visible.sync="delDialogVisible" width="400px">
+            <div class="inputTitle">币乎Id</div>
+            <div>
+                <el-input size="mini" placeholder="请输入币乎ID" :disabled="true" v-model="toDelTiming.bihuId" type="number">
+                </el-input>
+            </div>
+            <div class="inputTitle"> 申请删除定时时间的文章Id</div>
+            <div>
+                <el-input size="mini" placeholder="请输入文章Id" v-model="toDelTiming.proveArticleId" type="number">
+                </el-input>
+            </div>
+            <div class="note">
+                注：需要用该币乎ID账户发布一篇文章，文章的开头部分需要包含以下文字： <span style="color:red">币乎增强定时请求删除</span> 
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="delDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="delTiming">确 定</el-button>
+            </span>
+        </el-dialog>
+
+    </div>
+    <script src="timeBase.js"></script>
+</body>
+</script>

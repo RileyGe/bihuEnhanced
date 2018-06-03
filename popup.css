@@ -1,0 +1,103 @@
+body {
+  min-height: 100px;
+  width: 450px;
+}
+
+.content{
+    margin-top: 10px;
+    min-height: 200px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.title{
+    font-size: 18px;
+    color: #26a2ff;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.favItem{
+    margin: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.favItem:hover{
+    background: lightblue !important;
+}
+.itemCell{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow：ellipsis;
+    margin-right: 5px; 
+}
+.itemCell.itemNo{
+}
+.itemCell.itemHref{
+    flex: 1;
+}
+.tab{
+    font-size: 14px;
+    font-weight: bold;
+    color: #c1c1c1;
+    cursor: pointer;
+}
+.tabActive{
+    color: #26a2ff;
+}
+.noResult{
+    color: #c1c1c1;
+    font-size: 14px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+.iconfont{
+    font-size: 12px;
+}
+.iconfont:hover{
+    color:red;
+}
+.greenCell{
+    color: white;
+    background: green;
+}
+#policyBtn{
+    cursor: pointer;
+}
+
+.inputL1{
+    width: 60px;
+    color: blue;
+    font-weight: bold;
+    border-radius: 10%;
+}
+.inputL2{
+    width: 20px;
+    color: blue;
+    font-weight: bold;
+    border-radius: 10%;
+}
+input::-webkit-input-placeholder{
+    font-weight: normal;
+    font-size: 12px; 
+}
+
+input::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+}
+input::-webkit-outer-spin-button {
+     -webkit-appearance: none;  /* 有无看不出差别 */
+}
+button {
+  height: 20px;
+  width: 30px;
+  outline: none;
+  font-size: 12px;
+}

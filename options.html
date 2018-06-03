@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>币乎增强插件</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="lib/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>&nbsp;</h1>
+            <h1>币乎增强插件 <small> <span id="version"></span> &nbsp; &nbsp; &nbsp;选项设置</small></h1>
+            <hr>
+            <div>
+                <h3>&nbsp;</h3>
+
+                <div class="alert alert-info" role="alert">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="shareAbstract"> 文章分享摘要
+                    </label>
+                </div>               
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="inpageSearch"> 页面内搜索
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="addFav"> 收藏用户和文章
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="autoPublish"> 定时发文模块
+                    </label>
+                </div>               
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="manualDraft"> 手动添加草稿
+                    </label>
+                </div>                              
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="autoDraft"> 自动添加草稿
+                    </label>
+                </div>                                             
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="editorEnhance"> 编辑器增强
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="bigV"> 自动打开大V页面(按发文时间)
+                    </label>
+                </div>                              
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="bigVTimeDiff">时差党----“大V时间模块”推迟
+                        <input type="number" id="bigVTimeDiffMinutes" style="width:50px;height: 20px; font-size: 12px;margin: 0px 2px;border-radius: 20%">分钟打开大V页面(可输入负数表示提前多少分钟)
+                    </label>
+                </div>                              
+                 <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="quickZan"> 快速点赞模块
+                    </label>
+                </div>                                             
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="autoZanAfterGetLatestArc"> 快速点赞模块：获取最新文章后，若为刚刚发表，则自动点赞
+                    </label>
+                </div>                                                            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="reloadIndex"> 每2-3小时 打开/刷新 币乎首页，以保持登录状态
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="capBar">页面顶部显示KEY最新价格 
+                    </label>
+                </div>               
+            </div>
+            </div>
+            <h3>&nbsp;</h3>
+            <div class="text-left">
+                <div id="status"></div>
+                <button id="save" class="btn btn-primary btn-xs">保存</button>
+            </div>
+        </div>
+    </div>
+    <script src="options.js"></script>
+</body>
+
+</html>
