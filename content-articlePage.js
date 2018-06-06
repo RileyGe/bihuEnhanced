@@ -219,6 +219,10 @@ if (/https:\/\/bihu.com\/article\//.test(window.location.href)) {
                     <img alt="点击可以关闭" src="https://bihu2001.oss-cn-shanghai.aliyuncs.com/img/218c2ddcc07e29bab659253ac5eb575b.png?x-oss-process=style/size_lg" width="20px" height="20px;">\
                     管理黑&白名单\
                 </div>\
+                <p style="background-color: #eeeeee;padding: 10px;text-align: center;padding-right: 35px;">\
+                    <input id="switch-bwlist" checked=ture type="checkbox" style="width: 16px;height: 16px;">\
+                    <spna>启用评论过滤</spna>\
+                </p>\
                 <div class="content">\
                 </div>\
                 <div class="bottom">\
@@ -235,6 +239,11 @@ if (/https:\/\/bihu.com\/article\//.test(window.location.href)) {
                 $("div.content").empty();
 
                 if (bwlist !== null) {
+                    if(bwlist["switch"]=="false")
+                    {
+                        $("#switch-bwlist")[0].checked = false;
+                    }
+                    
                     for (var item in bwlist["blist"]) {
                         count++;
                         $("div.content").append(
@@ -294,9 +303,13 @@ if (/https:\/\/bihu.com\/article\//.test(window.location.href)) {
             //确定按钮事假 
             $("#bwlist-ok").click(function() {
                 $(".dialog").hide();
-                $(".mask").hide();
+                $(".mask").hide();                
                 var nodes = $("div.content")[0];
                 var nbwlist = $.parseJSON("{\"blist\":[], \"wlist\":[]}");
+                if($("#switch-bwlist")[0].checked === false)
+                {
+                    nbwlist["switch"] = "false";
+                }
                 for (var item = 0; item < nodes.childNodes.length; item++) {
                     var node = nodes.childNodes[item];
                     var un = node.childNodes[0].innerText;
@@ -325,6 +338,8 @@ if (/https:\/\/bihu.com\/article\//.test(window.location.href)) {
                 bwlist = $.parseJSON(localStorage.getItem(key + "_bwlist"));
             }
             //allitems += comments.length;
+            if(bwlist["switch"] == "false")
+                return;
             comments.each(function() {
                 //var innerText = $(this).find("p.first-comment-content").text().length;
                 var userName = this.children[0].children[1].children[0].text + "";
