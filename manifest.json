@@ -1,56 +1,27 @@
 {
-   "author": "achen",
-   "browser_action": {
-      "default_icon": "icon/icon128.png",
-      "default_popup": "popup.html"
-
-   },
-   "background": {
-      "page": "background.html"
-   },
-   "options_page": "options.html",
-   "content_scripts": [
-   {
-      "js": ["content_redirect.js"],
-      "matches":["https://www.bihu.com/*"],
-      "run_at": "document_start"
-   },
-    {
-       "js": [ "lib/jquery.min.js", "globalSite.js" ],
-      "css": [ "fontIcon.css"],
-      "matches": [ "https://bihu.com/*"],
-      "run_at": "document_start"
-   },
-   {
-       "js": [ "content-index.js" ],
-      "matches": [ "https://bihu.com/"],
-      "run_at": "document_start"
-   },{     
-      "js": ["content-autoPublish.js" ],
-      "css": [ "content-autoPublish.css"],
-      "matches": [ "https://bihu.com/edit*"],
-      "run_at": "document_start"
-   },{
-      "js": [ "content-articlePage.js" ],
-      "css": [ "content-articlePage.css"],
-      "matches": [ "https://bihu.com/article/*"],
-      "run_at": "document_idle"
-   },{
-      "js": [ "content-userPage.js" ],
-      "css": [ "content-userPage.css"],
-      "matches": [ "https://bihu.com/people/*"],
-      "run_at": "document_idle"
-   }],
-   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-   "web_accessible_resources": [
-   ],
-   "description": "币乎增强插件集合。功能1：自动定时发送文章(精确到秒、批量)；功能2：自动生成分享摘要；功能3：币乎文章/用户收藏；功能4：用户页面内搜索；功能5：文章草稿箱功能；功能6：编辑器增强；功能7：定时打开需点赞大V页面；功能8:快速点赞模块; 功能9：在线定时数据库",
-   "icons": {
-      "128": "icon/icon128.png"
-   },
-   "manifest_version": 2,
-   "name": "币乎增强插件",
-   "short_name": "币乎增强",
-   "permissions": [ "*://bihu.com/*","storage","tabs","activeTab" ,"webNavigation", "alarms", "notifications","webRequest","webRequestBlocking"],
-   "version": "1.5.0"
+    "author": "achen",
+    "browser_action": {
+        "default_icon": "icon/icon128.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "content_scripts": [{
+        "js": ["content-autoPublish.js", "lib/jquery.min.js"],
+        "css": ["content-autoPublish.css"],
+        "matches": ["https://bihu.com/edit*"],
+        "run_at": "document_start"
+    }],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "web_accessible_resources": [],
+    "description": "币乎增强插件集合。功能1：自动定时发送文章(精确到秒、批量)；功能2：自动生成分享摘要；功能3：币乎文章/用户收藏；功能4：用户页面内搜索；功能5：文章草稿箱功能；功能6：编辑器增强；功能7：定时打开需点赞大V页面；功能8:快速点赞模块; 功能9：在线定时数据库",
+    "icons": {
+        "128": "icon/icon128.png"
+    },
+    "manifest_version": 2,
+    "name": "币乎增强插件",
+    "short_name": "币乎增强",
+    "permissions": ["*://bihu.com/*", "storage", "tabs", "activeTab", "webNavigation", "alarms", "notifications", "webRequest", "webRequestBlocking"],
+    "version": "1.5.0"
 }
