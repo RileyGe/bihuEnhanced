@@ -22,6 +22,6 @@
     "manifest_version": 2,
     "name": "币乎增强插件",
     "short_name": "币乎增强",
-    "permissions": ["*://bihu.com/*", "storage", "tabs", "activeTab", "webNavigation", "alarms", "notifications", "webRequest", "webRequestBlocking"],
+    "permissions": ["*://bihu.com/*", "*://api.geetest.com/*", "storage", "tabs", "activeTab", "webNavigation", "alarms", "notifications", "webRequest", "webRequestBlocking"],
     "version": "1.5.0"
 }
