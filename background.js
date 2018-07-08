@@ -18,7 +18,7 @@ chrome.webRequest.onBeforeRequest.addListener(
             }
             //return {redirectUrl: "https://google.com"};
             console.log("cancel: " + details.url);
-            //return { cancel: true };
+            return { cancel: true };
         }
     }, { urls: ["<all_urls>"] }, ["blocking"]
     // {urls:["*://api.geetest.com/get*"]},  //监听页面请求,你也可以通过*来匹配。
